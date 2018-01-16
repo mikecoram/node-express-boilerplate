@@ -1,8 +1,6 @@
 ### Global Dependencies
 node,
-npm,
-sequelize-cli,
-mocha
+npm
 
 ### Requirements
 PostgreSQL database (Postgres.app is good for local testing on a Mac)
@@ -12,7 +10,6 @@ Install node/npm.
 ~~~~ 
 git clone https://mikecoram@bitbucket.org/mikecoram/prepare.git
 npm install
-npm install -g sequelize-cli mocha
 ~~~~
 Set up a postgreSQL database and then edit config/config.json to point to the database.
 Change the admin details in 'seeders/*-init.js'
@@ -51,6 +48,24 @@ sequelize db:seed:undo:all
 Create new seeder
 ~~~~
 sequelize db:seed:create
+~~~~
+
+Foreign key examples
+~~~~
+Quiz.associate = function(models) {
+    // Foreign key
+    Quiz.belongsTo(models.User, {
+        foreignKey: 'userId',
+        targetKey: 'id',
+        as: 'user'
+    });
+
+    // Parent of another model
+    Quiz.hasMany(models.Section, {
+        foreignKey: 'quizId',
+        as: 'sections'
+    });
+}
 ~~~~
 
 ### Notable
